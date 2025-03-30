@@ -1,6 +1,10 @@
 import pdfkit
 from time import sleep
 
+# Specify the path to wkhtmltopdf
+# Replace the path below with the location of wkhtmltopdf on your system
+config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')  # Update for your system
+
 # Open the file containing URLs
 try:
     with open('inputurls.txt', 'r') as urls_file:
@@ -24,7 +28,7 @@ for url in urls:
         # Extract a meaningful name from the URL
         name = url.split('/')[-2] if '/' in url else 'output'
         # Generate the PDF
-        pdfkit.from_url(url, f'{name}.pdf', options=options)
+        pdfkit.from_url(url, f'{name}.pdf', options=options, configuration=config)
         print(f"Successfully created {name}.pdf")
         sleep(2)  # Pause to avoid overwhelming the server
     except Exception as e:
